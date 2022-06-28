@@ -1,3 +1,3 @@
-const URL = "http://employee-server.vercel.app";
+const URL = "https://employee-server.vercel.app";
 
 export { URL };
