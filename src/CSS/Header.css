@@ -1,0 +1,70 @@
+.header {
+  height: 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+.logo {
+  font-size: 30px;
+  font-weight: 500;
+}
+.right-header {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding: 7px 0;
+  height: 60px;
+}
+.user-panel {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-left: 2px solid rgb(154, 153, 153);
+}
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.user {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.options-panel {
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-left: 0.1px;
+  border-left: 2px solid rgb(154, 153, 153);
+}
+.options-panel-item {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 0 3px 3px 1px rgb(104, 104, 104);
+}
+.search-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  height: 100%;
+}
+.search-header-input {
+  width: 200px;
+  padding-left: 10px;
+  border-radius: 10px;
+  border: 0.1px solid rgb(164, 164, 164);
+  height: 40px;
+  outline: none;
+}
