@@ -115,7 +115,7 @@ export default function AddEmployee({
           fontSize: 30,
         }}
       >
-        Create a new employee
+        {employee ? (employee._id ? "Edit" : "Create") : null} a new employee
       </div>
       <Form
         labelCol={{
@@ -180,7 +180,6 @@ export default function AddEmployee({
           ) : null}
         </Form.Item>
         <Form.Item label="Birthday">
-          {console.log(employee)}
           <DatePicker
             value={
               employee

@@ -79,7 +79,6 @@ export default function Employee() {
   const createEmployee = () => {
     call("POST", "/api/employee", employee)
       .then((res) => {
-        console.log(res.status);
         if (res.status === 201) {
           fetchEmployees();
           setEmployee(null);
@@ -170,7 +169,6 @@ export default function Employee() {
       ),
     },
   ];
-  // console.log(employee);
   return (
     <div className="employee">
       <DataTable
