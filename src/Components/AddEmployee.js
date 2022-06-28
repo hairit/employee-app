@@ -115,7 +115,8 @@ export default function AddEmployee({
           fontSize: 30,
         }}
       >
-        {employee ? (employee._id ? "Edit" : "Create") : null} a new employee
+        {employee ? (employee._id ? "Edit" : "Create") : "Create"} a new
+        employee
       </div>
       <Form
         labelCol={{
