@@ -1,25 +1,15 @@
-import {
-  Button,
-  Cascader,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TreeSelect,
-} from "antd";
+import { Button, DatePicker, Form, Radio, Select, Input } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
 import { useState, useEffect } from "react";
+
 const dateFormat = "YYYY-MM-DD";
+
 export default function AddEmployee({
   employee,
   setEmployee,
   createEmployee,
-  updateEmployee,
+  handleUpdateEmployee,
   openFormAddEmployee,
 }) {
   useEffect(() => {
@@ -44,65 +34,63 @@ export default function AddEmployee({
     setPositionError(false);
     setSalaryError(false);
   };
-  const handleActionEmployee = () => {
-    var errol = false;
-    if (employee) {
-      if (!employee.name) {
-        setNameError(true);
-        errol = true;
-      } else {
-        setNameError(false);
-      }
-      if (!employee.email || !employee.email.toString().includes("@")) {
-        setEmailError(true);
-        errol = true;
-      } else {
-        setEmailError(false);
-      }
-      if (!employee.phoneNumber || employee.phoneNumber.length !== 10) {
-        setPhoneError(true);
-        errol = true;
-      } else {
-        setPhoneError(false);
-      }
-      if (!employee.birthday) {
-        setBirthdayError(true);
-        errol = true;
-      } else {
-        setBirthdayError(false);
-      }
-      if (!employee.sex) {
-        setSexError(true);
-        errol = true;
-      } else {
-        setSexError(false);
-      }
-      if (!employee.level) {
-        setLevelError(true);
-        errol = true;
-      } else {
-        setLevelError(false);
-      }
-      if (!employee.salary) {
-        setSalaryError(true);
-        errol = true;
-      } else {
-        setSalaryError(false);
-      }
-      if (!employee.position) {
-        setPositionError(true);
-        errol = true;
-      } else {
-        setPositionError(false);
-      }
-      if (errol === true) return;
-      else {
-        if (employee._id) {
-          updateEmployee();
-        } else createEmployee();
-      }
+
+  const validate = () => {
+    var validate = true;
+    if (!employee.name) {
+      setNameError(true);
+      validate = false;
     } else {
-      alert("Please provide employee information");
+      setNameError(false);
+    }
+    if (!employee.email || !employee.email.toString().includes("@")) {
+      setEmailError(true);
+      validate = false;
+    } else {
+      setEmailError(false);
+    }
+    if (!employee.phoneNumber || employee.phoneNumber.length !== 10) {
+      setPhoneError(true);
+      validate = false;
+    } else {
+      setPhoneError(false);
+    }
+    if (!employee.birthday) {
+      setBirthdayError(true);
+      validate = false;
+    } else {
+      setBirthdayError(false);
+    }
+    if (!employee.sex) {
+      setSexError(true);
+      validate = false;
+    } else {
+      setSexError(false);
+    }
+    if (!employee.level) {
+      setLevelError(true);
+      validate = false;
+    } else {
+      setLevelError(false);
+    }
+    if (!employee.salary) {
+      setSalaryError(true);
+      validate = false;
+    } else {
+      setSalaryError(false);
+    }
+    if (!employee.position) {
+      setPositionError(true);
+      validate = false;
+    } else {
+      setPositionError(false);
+    }
+    return validate;
+  };
+  const handleActionEmployee = () => {
+    if (validate()) {
+      if (employee._id) handleUpdateEmployee();
+      else createEmployee();
     }
   };
   return (
@@ -229,6 +217,7 @@ export default function AddEmployee({
             <Select.Option value="Junior">Junior</Select.Option>
             <Select.Option value="Middle">Middle</Select.Option>
             <Select.Option value="Senior">Senior</Select.Option>
+            <Select.Option value="Team Lead">Team Lead</Select.Option>
           </Select>
           {employee ? (
             levelError ? (

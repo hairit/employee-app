@@ -1,5 +1,4 @@
 import axios from "axios";
-import { URL } from "./URL.js";
 const call = (method, path, body) => {
   if (
     (method === "PUT" || method === "POST" || method === "PATCH") &&
@@ -10,7 +9,7 @@ const call = (method, path, body) => {
   }
   return axios({
     method: method,
-    url: URL + path,
+    url: process.env.REACT_APP_URL_LOCAL + "/" + path,
     data: body,
   });
 };
