@@ -106,12 +106,12 @@ export default function AddEmployee({
     }
   };
   return (
-    <>
+    <div style={{ height: "100%", overflowY: "scroll" }}>
       <div
         style={{
           width: "100%",
           textAlign: "center",
-          padding: "50px 0",
+          padding: "25px 0",
           fontSize: 30,
         }}
       >
@@ -301,6 +301,6 @@ export default function AddEmployee({
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </div>
   );
 }
