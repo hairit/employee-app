@@ -1,4 +1,4 @@
-import { ActionTypes } from "../contants/action-types";
+import { ActionTypes } from '../contants/action-types';
 export const setEmployees = (employees) => {
   return {
     type: ActionTypes.GET_EMPLOYEES,

@@ -1,9 +1,9 @@
-import { Button, DatePicker, Form, Radio, Select, Input } from "antd";
-import "antd/dist/antd.css";
-import moment from "moment";
-import { useState, useEffect } from "react";
+import { Button, DatePicker, Form, Radio, Select, Input } from 'antd';
+import 'antd/dist/antd.css';
+import moment from 'moment';
+import { useState, useEffect } from 'react';
 
-const dateFormat = "YYYY-MM-DD";
+const dateFormat = 'YYYY-MM-DD';
 
 export default function AddEmployee({
   employee,
@@ -43,7 +43,7 @@ export default function AddEmployee({
     } else {
       setNameError(false);
     }
-    if (!employee.email || !employee.email.toString().includes("@")) {
+    if (!employee.email || !employee.email.toString().includes('@')) {
       setEmailError(true);
       validate = false;
     } else {
@@ -94,16 +94,16 @@ export default function AddEmployee({
     }
   };
   return (
-    <div style={{ height: "100%", overflowY: "scroll" }}>
+    <div style={{ height: '100%', overflowY: 'scroll' }}>
       <div
         style={{
-          width: "100%",
-          textAlign: "center",
-          padding: "25px 0",
+          width: '100%',
+          textAlign: 'center',
+          padding: '25px 0',
           fontSize: 30,
         }}
       >
-        {employee ? (employee._id ? "Edit" : "Create") : "Create"} a new
+        {employee ? (employee._id ? 'Edit' : 'Create') : 'Create'} a new
         employee
       </div>
       <Form
@@ -117,14 +117,15 @@ export default function AddEmployee({
       >
         <Form.Item label="Name">
           <Input
-            value={employee ? employee.name : ""}
+            defaultValue={'test'}
+            value={employee ? employee.name : ''}
             onChange={(e) =>
               setEmployee({ ...employee, name: e.target.value.toString() })
             }
           />
           {employee ? (
             nameError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
+              <div style={{ padding: '4px 11px', color: 'red' }}>
                 Please provider this information
               </div>
             ) : null
@@ -132,15 +133,16 @@ export default function AddEmployee({
         </Form.Item>
         <Form.Item label="Email">
           <Input
-            value={employee ? employee.email : ""}
+            defaultValue={'abc@gmail.com'}
+            value={employee ? employee.email : ''}
             onChange={(e) =>
               setEmployee({ ...employee, email: e.target.value.toString() })
             }
           />
           {employee ? (
             emailError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
-                {" "}
+              <div style={{ padding: '4px 11px', color: 'red' }}>
+                {' '}
                 Please provide Employee email address and it must contain @
                 character.
               </div>
@@ -149,7 +151,8 @@ export default function AddEmployee({
         </Form.Item>
         <Form.Item label="Phone">
           <Input
-            value={employee ? employee.phoneNumber : ""}
+            defaultValue={'0123456789'}
+            value={employee ? employee.phoneNumber : ''}
             onChange={(e) =>
               setEmployee({
                 ...employee,
@@ -159,8 +162,8 @@ export default function AddEmployee({
           />
           {employee ? (
             phoneError === true ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
-                {" "}
+              <div style={{ padding: '4px 11px', color: 'red' }}>
+                {' '}
                 Employee phone number length must be 10
               </div>
             ) : (
@@ -170,12 +173,13 @@ export default function AddEmployee({
         </Form.Item>
         <Form.Item label="Birthday">
           <DatePicker
+            defaultValue={(moment(new Date()), dateFormat)}
             value={
               employee
                 ? employee.birthday
                   ? moment(employee.birthday, dateFormat)
-                  : ""
-                : ""
+                  : ''
+                : ''
             }
             onChange={(date, dateString) =>
               setEmployee({ ...employee, birthday: dateString })
@@ -183,7 +187,7 @@ export default function AddEmployee({
           />
           {employee ? (
             birthdayError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
+              <div style={{ padding: '4px 11px', color: 'red' }}>
                 Please select employee' birthday
               </div>
             ) : null
@@ -201,7 +205,7 @@ export default function AddEmployee({
           </Radio.Group>
           {employee ? (
             sexError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
+              <div style={{ padding: '4px 11px', color: 'red' }}>
                 Please select employee' sex.
               </div>
             ) : null
@@ -209,9 +213,9 @@ export default function AddEmployee({
         </Form.Item>
         <Form.Item label="Level">
           <Select
-            value={employee ? employee.level : ""}
+            value={employee ? employee.level : ''}
             onChange={(value) => setEmployee({ ...employee, level: value })}
-            defaultValue={employee ? employee.level : ""}
+            defaultValue={employee ? employee.level : ''}
           >
             <Select.Option value="Intern">Intern</Select.Option>
             <Select.Option value="Junior">Junior</Select.Option>
@@ -221,7 +225,7 @@ export default function AddEmployee({
           </Select>
           {employee ? (
             levelError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
+              <div style={{ padding: '4px 11px', color: 'red' }}>
                 Please provider employee level
               </div>
             ) : null
@@ -229,9 +233,9 @@ export default function AddEmployee({
         </Form.Item>
         <Form.Item label="Position">
           <Select
-            value={employee ? employee.position : ""}
+            value={employee ? employee.position : ''}
             onChange={(value) => setEmployee({ ...employee, position: value })}
-            defaultValue={employee ? employee.position : ""}
+            defaultValue={employee ? employee.position : ''}
           >
             <Select.Option value="Front-end Developer">
               Front-end Developer
@@ -248,7 +252,7 @@ export default function AddEmployee({
           </Select>
           {employee ? (
             positionError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
+              <div style={{ padding: '4px 11px', color: 'red' }}>
                 Please provider employee position
               </div>
             ) : null
@@ -256,15 +260,15 @@ export default function AddEmployee({
         </Form.Item>
         <Form.Item label="Salary">
           <Input
-            value={employee ? employee.salary : ""}
-            type={"number"}
+            value={employee ? employee.salary : ''}
+            type={'number'}
             onChange={(e) =>
               setEmployee({ ...employee, salary: e.target.value.toString() })
             }
           />
           {employee ? (
             salaryError ? (
-              <div style={{ padding: "4px 11px", color: "red" }}>
+              <div style={{ padding: '4px 11px', color: 'red' }}>
                 Please provider employee salary
               </div>
             ) : null
