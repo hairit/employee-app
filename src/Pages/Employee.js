@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../CSS/Employee.css';
 import call from '../Data/API';
@@ -32,21 +32,17 @@ export default function Employee() {
   const [totalRows, setTotalRows] = useState(0);
   const [pagination, setPagination] = useState(true);
   const [perPage, setPerPage] = useState(10);
+  const [page, setpage] = useState(1);
   const [openFormAddEmployee, setOpenFormAddEmployee] = useState(false);
   const [searchEmployeesByName, setSearchEmployeesByName] = useState('');
-  const [employee, setEmployee] = useState({
-    name: 'Thanh Hoa',
-    birthday: '2000-03-09T03:33:34.535Z',
-    sex: 'Female',
-    phoneNumber: '0928392812',
-    email: 'tlh275@gmail.com',
-    level: 'Intern',
-    position: 'Software Engineer',
-    salary: 2000000,
-  });
+  const [employee, setEmployee] = useState(null);
   const [employeesData, setEmployeesData] = useState([]);
   const employees = useSelector((state) => state.employee.employees);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchEmployees(perPage, page);
+  }, []);
 
   const columns = [
     {
@@ -218,6 +214,7 @@ export default function Employee() {
   };
 
   const handlePageChange = (page) => {
+    setpage(page);
     fetchEmployees(perPage, page);
   };
 
