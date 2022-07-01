@@ -6,25 +6,18 @@ import call from '../Data/API';
 import DataTable from 'react-data-table-component';
 import { formatCurrency } from '../Classes/Solver.js';
 import { MdDelete } from 'react-icons/md';
-import { AiOutlineLeft } from 'react-icons/ai';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { ImSearch } from 'react-icons/im';
 import { Button } from 'react-bootstrap';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import AddEmployee from '../Form/AddEmployee';
-import {
-  addEmployee,
-  setEmployees,
-  updateEmployee,
-  deleteEmployee,
-} from '../redux/actions/employeeActions';
+import { setEmployees } from '../redux/actions/employeeActions';
 import moment from 'moment';
 
 const GET_METHOD = 'GET';
 const POST_METHOD = 'POST';
 const PUT_METHOD = 'PUT';
 const DELETE_METHOD = 'DELETE';
-// const PATCH_METHOD = 'PATCH';
 const EMPLOYEE_API = 'api/employee';
 
 export default function Employee() {
@@ -110,11 +103,6 @@ export default function Employee() {
       const newEmployeesList = employees;
       newEmployeesList.push(employee);
     }
-    // console.log(newEmployeesList.length + ':' + perPage);
-    // if (newEmployeesList.length <= perPage) {
-    //   // dispatch(setEmployees(newEmployeesList));
-    //   // setEmployeesData(newEmployeesList);
-    // }
     setEmployee(null);
     setOpenFormAddEmployee(false);
   };
@@ -123,8 +111,7 @@ export default function Employee() {
     const employeesList = employees;
     const index = employeesList.findIndex((e) => e._id === employee._id);
     employeesList[index] = employee;
-    // dispatch(setEmployees(employeesList));
-    // setEmployeesData(employeesList);
+
     setOpenFormAddEmployee(false);
   };
 
@@ -160,11 +147,6 @@ export default function Employee() {
     call(DELETE_METHOD, EMPLOYEE_API + `/${_id}`, null)
       .then(async (res) => {
         if (res.status === 200) {
-          // const employeesAfterDelete = employees.filter((element) => {
-          //   return element._id !== res.data._id;
-          // });
-          // dispatch(setEmployees(employeesAfterDelete));
-          // setEmployeesData(employeesAfterDelete);
           removeEmployeeInRedux(res.data);
         }
       })
@@ -172,17 +154,6 @@ export default function Employee() {
   };
 
   const createEmployee = () => {
-    // call(POST_METHOD, EMPLOYEE_API, employee)
-    //   .then((res) => {
-    //     if (res.status === 201) {
-    //       dispatch(addEmployee(res.data));
-    //       console.log(employees);
-    //       setEmployeesData(employees);
-    //       setEmployee(null);
-    //       setOpenFormAddEmployee(false);
-    //     }
-    //   })
-    //   .catch((err) => alert('Add employee fail' + err.message));
     call(POST_METHOD, EMPLOYEE_API, employee)
       .then((res) => {
         if (res.status === 201) {
@@ -251,7 +222,6 @@ export default function Employee() {
         columns={columns}
         data={employeesData}
         fixedHeader
-        // fixedHeaderScrollHeight="500px"
         highlightOnHover
         subHeaderAlign="right"
         progressPending={loading}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import '../CSS/Body.css';
-// import { Container, Row, Col } from "react-bootstrap";
 import { NavLink, useHistory } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
 import { BiChevronLeft } from 'react-icons/bi';
