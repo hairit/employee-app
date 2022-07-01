@@ -1,7 +1,6 @@
-
-import "./CSS/App.css";
-import Header from "./Layout/Header";
-import Body from "./Layout/Body";
+import './CSS/App.css';
+import Header from './Layout/Header';
+import Body from './Layout/Body';
 
 function App() {
   return (
@@ -11,4 +10,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

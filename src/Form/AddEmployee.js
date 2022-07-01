@@ -45,13 +45,21 @@ export default function AddEmployee({
     } else {
       setNameError(false);
     }
-    if (!employee.email || !employee.email.toString().includes('@')) {
+    if (
+      !employee.email ||
+      !employee.email.toString().includes('@') ||
+      employee.email.toString().includes(' ')
+    ) {
       setEmailError(true);
       validate = false;
     } else {
       setEmailError(false);
     }
-    if (!employee.phoneNumber || employee.phoneNumber.length !== 10) {
+    if (
+      !employee.phoneNumber ||
+      employee.phoneNumber.length !== 10 ||
+      employee.phoneNumber[0] !== '0'
+    ) {
       setPhoneError(true);
       validate = false;
     } else {
@@ -89,12 +97,14 @@ export default function AddEmployee({
     }
     return validate;
   };
+
   const handleActionEmployee = () => {
     if (validate()) {
       if (employee._id) updateEmployee();
       else createEmployee();
     }
   };
+
   return (
     <div
       style={{
@@ -161,7 +171,7 @@ export default function AddEmployee({
               <div style={{ padding: '4px 11px', color: 'red' }}>
                 {' '}
                 Please provide Employee email address and it must contain @
-                character.
+                character and not allowed to include space character
               </div>
             ) : null
           ) : null}
@@ -181,7 +191,8 @@ export default function AddEmployee({
             phoneError === true ? (
               <div style={{ padding: '4px 11px', color: 'red' }}>
                 {' '}
-                Employee phone number length must be 10
+                Employee phone number length must be 10 and must start with 0
+                number
               </div>
             ) : (
               <div></div>
