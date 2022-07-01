@@ -1,6 +1,7 @@
 import { Button, DatePicker, Form, Radio, Select, Input } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { useState, useEffect } from 'react';
 
 const dateFormat = 'YYYY-MM-DD';
@@ -9,8 +10,9 @@ export default function AddEmployee({
   employee,
   setEmployee,
   createEmployee,
-  handleUpdateEmployee,
+  updateEmployee,
   openFormAddEmployee,
+  setOpenFormAddEmployee,
 }) {
   useEffect(() => {
     if (openFormAddEmployee === false) resetErrol();
@@ -89,12 +91,27 @@ export default function AddEmployee({
   };
   const handleActionEmployee = () => {
     if (validate()) {
-      if (employee._id) handleUpdateEmployee();
+      if (employee._id) updateEmployee();
       else createEmployee();
     }
   };
   return (
-    <div style={{ height: '100%', overflowY: 'scroll' }}>
+    <div
+      style={{
+        height: '100%',
+        overflowY: 'scroll',
+        position: 'relative',
+        cursor: 'pointer',
+      }}
+    >
+      <div
+        style={{ position: 'absolute', left: '7px', top: '7px' }}
+        onClick={() => setOpenFormAddEmployee(false)}
+      >
+        <IoIosCloseCircleOutline
+          style={{ fontSize: 25, fontWeight: 500 }}
+        ></IoIosCloseCircleOutline>
+      </div>
       <div
         style={{
           width: '100%',

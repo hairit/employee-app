@@ -45,7 +45,7 @@
   padding: 10px 30px;
 }
 .workspace-head::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 100%;

@@ -22,6 +22,9 @@ export const employeesReducer = (state = initialState, { type, payload }) => {
       return { ...state, employees: employees };
     }
     case ActionTypes.DELETE_EMPLOYEE: {
+      const employees = state.employees.filter(
+        (element) => element._id !== payload._id
+      );
       return { ...state, employees: employees };
     }
     default:

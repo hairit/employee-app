@@ -34,90 +34,19 @@ export default function Employee() {
   const [perPage, setPerPage] = useState(10);
   const [openFormAddEmployee, setOpenFormAddEmployee] = useState(false);
   const [searchEmployeesByName, setSearchEmployeesByName] = useState('');
-  const [employee, setEmployee] = useState(null);
+  const [employee, setEmployee] = useState({
+    name: 'Thanh Hoa',
+    birthday: '2000-03-09T03:33:34.535Z',
+    sex: 'Female',
+    phoneNumber: '0928392812',
+    email: 'tlh275@gmail.com',
+    level: 'Intern',
+    position: 'Software Engineer',
+    salary: 2000000,
+  });
   const [employeesData, setEmployeesData] = useState([]);
   const employees = useSelector((state) => state.employee.employees);
   const dispatch = useDispatch();
-
-  const fetchEmployees = (perPage, page) => {
-    setLoading(true);
-    var paging = '';
-    page && perPage
-      ? (paging = `/page/${page}/perPage/${perPage}`)
-      : (paging = '');
-    call(GET_METHOD, EMPLOYEE_API + paging, null)
-      .then((res) => {
-        dispatch(setEmployees(res.data.employees));
-        setEmployeesData(res.data.employees);
-        setLoading(false);
-        setTotalRows(res.data.total);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const removeEmployee = (_id) => {
-    call(DELETE_METHOD, EMPLOYEE_API + `/${_id}`, null)
-      .then((res) => {
-        if (res.status === 200) {
-          dispatch(deleteEmployee(res.data));
-          const employeeFilter = employees.filter((element) => {
-            return element._id !== res.data._id;
-          });
-          dispatch(setEmployees(employeeFilter));
-          setEmployeesData(employeeFilter);
-        }
-      })
-      .catch((err) => alert('Delete employee fail' + err.message));
-  };
-
-  const createEmployee = () => {
-    call(POST_METHOD, EMPLOYEE_API, employee)
-      .then((res) => {
-        if (res.status === 201) {
-          dispatch(addEmployee(res.data));
-          console.log(employees);
-          setEmployeesData(employees);
-          setEmployee(null);
-          setOpenFormAddEmployee(false);
-        }
-      })
-      .catch((err) => alert('Add employee fail' + err.message));
-  };
-
-  const handleUpdateEmployee = async () => {
-    call(PUT_METHOD, EMPLOYEE_API + `/${employee._id}`, employee)
-      .then((res) => {
-        if (res.status === 200) {
-          dispatch(updateEmployee(res.data));
-          setEmployeesData(employees);
-          setEmployee(null);
-          setOpenFormAddEmployee(false);
-        }
-      })
-      .catch((err) => alert('Update employee fail' + err.message));
-    // const response = await axios
-    //   .put(`http://localhost:2000/api/employee/${employee._id}`, employee)
-    //   .catch((err) => console.log(err));
-    // if (response.status === 200) {
-    //   dispatch(updateEmployee(response.data));
-    //   setEmployeesData(employees);
-    //   setEmployee(null);
-    //   setOpenFormAddEmployee(false);
-    // }
-  };
-
-  const searchEmployees = () => {
-    setLoading(true);
-    call(GET_METHOD, EMPLOYEE_API + `/name/${searchEmployeesByName}`, null)
-      .then((res) => {
-        if (!searchEmployeesByName) setPagination(true);
-        else setPagination(false);
-        dispatch(setEmployees(res.data));
-        setEmployeesData(res.data);
-        setLoading(false);
-      })
-      .catch((err) => console.log('Can not search employees' + err));
-  };
 
   const columns = [
     {
@@ -179,6 +108,115 @@ export default function Employee() {
       ),
     },
   ];
+
+  const createEmployeeInRedux = (employee) => {
+    if (employees.length < perPage) {
+      const newEmployeesList = employees;
+      newEmployeesList.push(employee);
+    }
+    // console.log(newEmployeesList.length + ':' + perPage);
+    // if (newEmployeesList.length <= perPage) {
+    //   // dispatch(setEmployees(newEmployeesList));
+    //   // setEmployeesData(newEmployeesList);
+    // }
+    setEmployee(null);
+    setOpenFormAddEmployee(false);
+  };
+
+  const updateEmployeeInRedux = (employee) => {
+    const employeesList = employees;
+    const index = employeesList.findIndex((e) => e._id === employee._id);
+    employeesList[index] = employee;
+    // dispatch(setEmployees(employeesList));
+    // setEmployeesData(employeesList);
+    setOpenFormAddEmployee(false);
+  };
+
+  const removeEmployeeInRedux = (employee) => {
+    const employeesAfterDelete = employees.filter(
+      (e) => e._id !== employee._id
+    );
+    dispatch(setEmployees(employeesAfterDelete));
+    setEmployeesData(employeesAfterDelete);
+  };
+
+  const setEmployeesToRedux = (employees) => {
+    dispatch(setEmployees(employees));
+    setEmployeesData(employees);
+  };
+
+  const fetchEmployees = (perPage, page) => {
+    setLoading(true);
+    var paging = '';
+    page && perPage
+      ? (paging = `/page/${page}/perPage/${perPage}`)
+      : (paging = '');
+    call(GET_METHOD, EMPLOYEE_API + paging, null)
+      .then((res) => {
+        setEmployeesToRedux(res.data.employees);
+        setLoading(false);
+        setTotalRows(res.data.total);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const removeEmployee = (_id) => {
+    call(DELETE_METHOD, EMPLOYEE_API + `/${_id}`, null)
+      .then(async (res) => {
+        if (res.status === 200) {
+          // const employeesAfterDelete = employees.filter((element) => {
+          //   return element._id !== res.data._id;
+          // });
+          // dispatch(setEmployees(employeesAfterDelete));
+          // setEmployeesData(employeesAfterDelete);
+          removeEmployeeInRedux(res.data);
+        }
+      })
+      .catch((err) => alert('Delete employee fail' + err.message));
+  };
+
+  const createEmployee = () => {
+    // call(POST_METHOD, EMPLOYEE_API, employee)
+    //   .then((res) => {
+    //     if (res.status === 201) {
+    //       dispatch(addEmployee(res.data));
+    //       console.log(employees);
+    //       setEmployeesData(employees);
+    //       setEmployee(null);
+    //       setOpenFormAddEmployee(false);
+    //     }
+    //   })
+    //   .catch((err) => alert('Add employee fail' + err.message));
+    call(POST_METHOD, EMPLOYEE_API, employee)
+      .then((res) => {
+        if (res.status === 201) {
+          createEmployeeInRedux(res.data);
+        }
+      })
+      .catch((err) => alert('Add employee fail' + err.message));
+  };
+
+  const updateEmployee = async () => {
+    call(PUT_METHOD, EMPLOYEE_API + `/${employee._id}`, employee)
+      .then((res) => {
+        if (res.status === 200) {
+          updateEmployeeInRedux(res.data);
+        }
+      })
+      .catch((err) => alert('Update employee fail' + err.message));
+  };
+
+  const searchEmployees = () => {
+    setLoading(true);
+    call(GET_METHOD, EMPLOYEE_API + `/name/${searchEmployeesByName}`, null)
+      .then((res) => {
+        setPagination(false);
+        setEmployeesToRedux(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log('Can not search employees' + err));
+  };
+
   const handlePageChange = (page) => {
     fetchEmployees(perPage, page);
   };
@@ -190,29 +228,34 @@ export default function Employee() {
 
   return (
     <div className="employee">
+      <div className="table-head">
+        <div style={{ position: 'relative' }}>
+          <input
+            className="search-employee"
+            type="text"
+            placeholder="Search Employee"
+            onChange={(e) =>
+              setSearchEmployeesByName(e.target.value.toString())
+            }
+          />
+          <button className="search-button" onClick={() => searchEmployees()}>
+            <ImSearch></ImSearch>
+          </button>
+        </div>
+        <button
+          className="create-button"
+          onClick={() => setOpenFormAddEmployee(true)}
+        >
+          Create
+        </button>
+      </div>
       <DataTable
         style={{ zIndex: 10 }}
         columns={columns}
         data={employeesData}
         fixedHeader
-        fixedHeaderScrollHeight="500px"
+        // fixedHeaderScrollHeight="500px"
         highlightOnHover
-        subHeader
-        subHeaderComponent={
-          <div style={{ position: 'relative' }}>
-            <input
-              className="search-employee"
-              type="text"
-              placeholder="Search Employee"
-              onChange={(e) =>
-                setSearchEmployeesByName(e.target.value.toString())
-              }
-            />
-            <button className="search-button" onClick={() => searchEmployees()}>
-              <ImSearch></ImSearch>
-            </button>
-          </div>
-        }
         subHeaderAlign="right"
         progressPending={loading}
         pagination={pagination}
@@ -226,26 +269,13 @@ export default function Employee() {
           openFormAddEmployee === true ? 'form-employee-open' : 'form-employee'
         }
       >
-        <div className="button-open">
-          <AiOutlineLeft
-            style={{
-              fontSize: 20,
-              transform:
-                openFormAddEmployee === true ? 'rotate(3.142rad)' : null,
-              transition: '0.5s',
-            }}
-            onClick={() => {
-              setOpenFormAddEmployee(!openFormAddEmployee);
-              setEmployee(null);
-            }}
-          ></AiOutlineLeft>
-        </div>
         <AddEmployee
           employee={employee}
           createEmployee={createEmployee}
           setEmployee={setEmployee}
-          handleUpdateEmployee={handleUpdateEmployee}
+          updateEmployee={updateEmployee}
           openFormAddEmployee={openFormAddEmployee}
+          setOpenFormAddEmployee={setOpenFormAddEmployee}
         ></AddEmployee>
       </div>
     </div>
