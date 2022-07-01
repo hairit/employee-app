@@ -32,7 +32,7 @@ export default function Employee() {
   const [totalRows, setTotalRows] = useState(0);
   const [pagination, setPagination] = useState(true);
   const [perPage, setPerPage] = useState(10);
-  const [page, setpage] = useState(1);
+  const [page, setPage] = useState(1);
   const [openFormAddEmployee, setOpenFormAddEmployee] = useState(false);
   const [searchEmployeesByName, setSearchEmployeesByName] = useState('');
   const [employee, setEmployee] = useState(null);
@@ -214,7 +214,7 @@ export default function Employee() {
   };
 
   const handlePageChange = (page) => {
-    setpage(page);
+    setPage(page);
     fetchEmployees(perPage, page);
   };
 
